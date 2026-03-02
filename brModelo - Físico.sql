@@ -1,0 +1,63 @@
+/* Lógico_1: */
+
+CREATE TABLE CLIENTES (
+    Cod_Cliente INT PRIMARY KEY,
+    Sobrenome VARCHAR(50),
+    Nome VARCHAR(50),
+    Inicial CHAR(1),
+    DDD CHAR(2),
+    Telefone VARCHAR(15),
+    Saldo DECIMAL(10, 2)
+);
+
+CREATE TABLE FATURAS (
+    Num_fatura INT PRIMARY KEY,
+    Data_Fatura DATE,
+    FK_CLIENTES_Cod_Cliente INT
+);
+
+CREATE TABLE LINHAS (
+    Num_Linha INT PRIMARY KEY,
+    Unidades INT,
+    Valor DECIMAL(10, 2),
+    FK_FATURAS_Num_fatura INT,
+    FK_PRODUTOS_Cod_Produto INT
+);
+
+CREATE TABLE PRODUTOS (
+    Cod_Produto INT PRIMARY KEY,
+    Descricao VARCHAR(100),
+    Data_Compra DATE,
+    Quantidade INT,
+    Valor DECIMAL(10, 2),
+    FK_FORNECEDORES_Cod_Fornecedor INT
+);
+
+CREATE TABLE FORNECEDORES (
+    Cod_Fornecedor INT PRIMARY KEY,
+    Nome VARCHAR(60),
+    Contato VARCHAR(50),
+    DDD CHAR(2),
+    Telefone VARCHAR(15),
+    Estado CHAR(2)
+);
+ 
+ALTER TABLE FATURAS ADD CONSTRAINT FK_FATURAS_2
+    FOREIGN KEY (FK_CLIENTES_Cod_Cliente)
+    REFERENCES CLIENTES (Cod_Cliente)
+    ON DELETE CASCADE;
+ 
+ALTER TABLE LINHAS ADD CONSTRAINT FK_LINHAS_2
+    FOREIGN KEY (FK_FATURAS_Num_fatura)
+    REFERENCES FATURAS (Num_fatura)
+    ON DELETE RESTRICT;
+ 
+ALTER TABLE LINHAS ADD CONSTRAINT FK_LINHAS_3
+    FOREIGN KEY (FK_PRODUTOS_Cod_Produto)
+    REFERENCES PRODUTOS (Cod_Produto)
+    ON DELETE CASCADE;
+ 
+ALTER TABLE PRODUTOS ADD CONSTRAINT FK_PRODUTOS_2
+    FOREIGN KEY (FK_FORNECEDORES_Cod_Fornecedor)
+    REFERENCES FORNECEDORES (Cod_Fornecedor)
+    ON DELETE CASCADE;
