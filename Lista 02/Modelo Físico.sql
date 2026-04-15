@@ -1,5 +1,3 @@
-/* Modelo Lógico: */
-
 CREATE TABLE CUSTOMER (
     CUS_CODE INT PRIMARY KEY,
     CUS_LNAME VARCHAR(50),
